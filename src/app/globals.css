@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep slate — warm, breathable dark mode */
+  --color-dark: #121214;
+  --color-dark-card: #17171a;
+  --color-dark-elevated: #1c1c20;
+  --color-dark-surface: #222226;
+  --color-dark-border: rgba(255, 255, 255, 0.06);
+
+  /* Text hierarchy */
+  --color-heading: #ece9e1;
+  --color-body: #9a9a9a;
+  --color-muted: #5e5e5e;
+
+  /* Gold accent */
+  --color-accent: #facc15;
+  --color-accent-muted: #ca8a04;
+  --color-accent-subtle: rgba(250, 204, 21, 0.10);
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-body);
+  background-color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+}
