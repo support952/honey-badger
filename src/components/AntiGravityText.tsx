@@ -53,7 +53,8 @@ const AntiGravityText = memo(function AntiGravityText({
     [children]
   );
 
-  if (prefersReduced) {
+  // Fall back to simple render for reduced motion or very long text (performance)
+  if (prefersReduced || children.length > 80) {
     return <Tag className={className}>{children}</Tag>;
   }
 

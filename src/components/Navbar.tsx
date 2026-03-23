@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 
@@ -15,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -27,6 +28,35 @@ export default function Navbar() {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
+
+  // Focus trap for mobile menu
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!menuOpen || e.key !== "Tab") return;
+    const focusable = menuRef.current?.querySelectorAll<HTMLElement>("a, button");
+    if (!focusable || focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      // Close on Escape
+      const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+      document.addEventListener("keydown", handleEsc);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("keydown", handleEsc);
+      };
+    }
+  }, [menuOpen, handleKeyDown]);
 
   return (
     <>
@@ -85,11 +115,15 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            ref={menuRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-dark/98 backdrop-blur-xl flex flex-col items-center justify-center gap-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             {navLinks.map((link, i) => (
               <motion.a

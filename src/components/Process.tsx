@@ -75,6 +75,8 @@ export default function Process() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const headlineParallax = useMouseParallax(0.4);
+  const decorCircle1 = useMouseParallax(1.8);
+  const decorCircle2 = useMouseParallax(2.2);
 
   return (
     <section className="py-16 sm:py-24 md:py-32 lg:py-40 bg-dark-elevated relative overflow-hidden">
@@ -89,13 +91,13 @@ export default function Process() {
       <div className="hidden md:block">
         <motion.div
           className="absolute top-20 left-[15%] w-32 h-32 rounded-full border border-white/[0.02] pointer-events-none"
-          style={{ ...useMouseParallax(1.8) }}
+          style={{ x: decorCircle1.x, y: decorCircle1.y }}
           animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="absolute bottom-32 right-[8%] w-2 h-2 rounded-full bg-accent/12 pointer-events-none"
-          style={{ ...useMouseParallax(2.2) }}
+          style={{ x: decorCircle2.x, y: decorCircle2.y }}
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />

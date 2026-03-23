@@ -60,12 +60,13 @@ export default function CTA() {
                 →
               </span>
             </a>
-            <a
-              href="mailto:hello@honeybadger.com"
-              className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-muted border-b border-white/[0.08] pb-1 hover:text-heading hover:border-accent/30 transition-all duration-300"
+            <button
+              onClick={() => navigator.clipboard.writeText("hello@honeybadger.com")}
+              className="text-[12px] sm:text-[13px] uppercase tracking-[0.2em] text-muted border-b border-white/[0.08] pb-1 hover:text-heading hover:border-accent/30 transition-all duration-300 cursor-pointer"
+              title="Click to copy email address"
             >
               hello@honeybadger.com
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>

@@ -7,11 +7,27 @@ const goldDim = "rgba(250, 204, 21, 0.3)";
 const goldFaint = "rgba(250, 204, 21, 0.08)";
 const line = "rgba(255,255,255,0.06)";
 
+const illustrationLabels: Record<string, string> = {
+  "e2-full-blueprint": "E2 Visa Blueprint — US map with route lines",
+  "custom-business-plan": "Custom Business Plan — document stack with seal",
+  "financial-projections": "Financial Projections — 3D bar chart",
+  "financial-model-excel": "Financial Model — spreadsheet grid",
+  "multi-entity-planning": "Multi-Entity Planning — organizational chart",
+  "cash-flow-analysis": "Cash Flow Analysis — flowing wave chart",
+  "risk-compliance-review": "Risk & Compliance — shield with checkmark",
+  "business-doc-package": "Document Package — file folder stack",
+  "family-doc-package": "Family Package — connected people",
+  "expedite-package": "Expedited Processing — clock with speed lines",
+  "financial-template": "Financial Template — code editor with download",
+  "financial-model-basic": "Basic Financial Model — spreadsheet grid",
+};
+
 /** Maps product IDs to unique SVG conceptual illustrations */
 export default function ProductIllustration({ productId }: { productId: string }) {
   const Svg = illustrations[productId] ?? DefaultIllustration;
+  const label = illustrationLabels[productId] ?? "Service illustration";
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center" role="img" aria-label={label}>
       <Svg />
     </div>
   );
@@ -327,10 +343,10 @@ function SpeedIllustration() {
       {/* Tick marks */}
       {Array.from({ length: 12 }).map((_, i) => {
         const angle = (i * 30 - 90) * (Math.PI / 180);
-        const x1 = 100 + Math.cos(angle) * 30;
-        const y1 = 60 + Math.sin(angle) * 30;
-        const x2 = 100 + Math.cos(angle) * 34;
-        const y2 = 60 + Math.sin(angle) * 34;
+        const x1 = Math.round((100 + Math.cos(angle) * 30) * 100) / 100;
+        const y1 = Math.round((60 + Math.sin(angle) * 30) * 100) / 100;
+        const x2 = Math.round((100 + Math.cos(angle) * 34) * 100) / 100;
+        const y2 = Math.round((60 + Math.sin(angle) * 34) * 100) / 100;
         return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={goldDim} strokeWidth={i % 3 === 0 ? "1" : "0.4"} />;
       })}
       {/* Hands */}

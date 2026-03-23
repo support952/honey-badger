@@ -26,7 +26,7 @@ const Hero = memo(function Hero() {
       {/* Optimized background with next/image */}
       <Image
         src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1920&q=75&fm=webp"
-        alt=""
+        alt="Aerial view of a modern city skyline at dusk"
         fill
         priority
         sizes="100vw"

@@ -122,8 +122,9 @@ export default function ShopPage() {
 
           {/* Sort */}
           <div className="flex items-center gap-3">
-            <span className="text-[11px] uppercase tracking-[0.2em] text-muted">Sort by</span>
+            <label htmlFor="sort-select" className="text-[11px] uppercase tracking-[0.2em] text-muted">Sort by</label>
             <select
+              id="sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-dark-surface/50 border border-white/[0.06] text-heading text-[13px] tracking-wide px-3 py-2 rounded-sm focus:outline-none focus:border-accent/20 transition-colors duration-300 appearance-none cursor-pointer"

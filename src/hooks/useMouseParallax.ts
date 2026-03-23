@@ -16,7 +16,7 @@ function getSharedMouse() {
 }
 
 function startListening() {
-  if (listenerCount > 0 || typeof window === "undefined") return;
+  if (removeListener || typeof window === "undefined") return;
   const { sharedX: sx, sharedY: sy } = getSharedMouse();
 
   const handler = (e: MouseEvent) => {
@@ -27,13 +27,15 @@ function startListening() {
   };
 
   window.addEventListener("mousemove", handler, { passive: true });
-  removeListener = () => window.removeEventListener("mousemove", handler);
+  removeListener = () => {
+    window.removeEventListener("mousemove", handler);
+    removeListener = null;
+  };
 }
 
 function stopListening() {
   if (listenerCount > 0) return;
   removeListener?.();
-  removeListener = null;
 }
 
 /**
@@ -64,8 +66,8 @@ export function useMouseParallax(intensity: number = 1) {
     return () => {
       unsubX();
       unsubY();
-      listenerCount--;
-      if (listenerCount === 0) stopListening();
+      listenerCount = Math.max(0, listenerCount - 1);
+      stopListening();
     };
   }, [intensity, sx, sy, rawX, rawY]);
 
